@@ -1,9 +1,12 @@
-var defaultPrefix = "?" 
+//This code was made in a repl, so, some things may be different. You will need a file called "prefixes.db" or it might be automatically created. 
+// All mentions of snowflake IDs should be changed, or in some cases removed. In this case, "514268920627331082" is brought up, that is my discord ID, and would be replaced with yours.
+// "809668618597826632" is my own guild ID, that should be replaced with yours as well. Anything you'd like can be changed but please read what's in readme.md
+var defaultPrefix = "?"  
 var guildPrefix = ""
 const express = require('express');
 const app = express();
 const port = 6969;
-app.get('/', (req, res) => res.send('The man himself is online'));
+app.get('/', (req, res) => res.send('Choose bot is online!'));
 app.listen(port, () => console.log(`Logged in at ${Date.now()}. ChooseBot is online at https://localhost:${port}`));
 const redditImageFetcher = require("reddit-image-fetcher")
 const Discord = require('discord.js');
@@ -769,4 +772,4 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}misc`)) {
   message.channel.send(miscEmbed)
 }
 }}) // complete end of code
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN); // You will want to make a file named ".env" and put "TOKEN= <your bot token>", OR, you can just put your token in the code. Like this, "client.login(<your token here>)."
