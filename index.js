@@ -1,6 +1,8 @@
 //This code was made in a repl, so, some things may be different. You will need a file called "prefixes.db" or it might be automatically created. 
 // All mentions of snowflake IDs should be changed, or in some cases removed. In this case, "514268920627331082" is brought up, that is my discord ID, and would be replaced with yours.
 // "809668618597826632" is my own guild ID, that should be replaced with yours as well. Anything you'd like can be changed but please read what's in readme.md
+// "816457112804261908" is the bots ID, that should be replaced with your bots application ID.
+// Please contact me on discord at CantChooseThis#6982, or Cant@Choosethis.org for any questions related to the code. 
 var defaultPrefix = "?"  
 var guildPrefix = ""
 const express = require('express');
