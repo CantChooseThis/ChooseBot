@@ -3,14 +3,14 @@
 // "809668618597826632" is my own guild ID, that should be replaced with yours as well. Anything you'd like can be changed but please read what's in readme.md
 // "816457112804261908" is the bots ID, that should be replaced with your bots application ID.
 // Please contact me on discord at CantChooseThis#6982, or Cant@Choosethis.org for any questions related to the code. 
-// You would probably want the statuses to be different, so, you can edit the list variable "statuses" which is at line 46.
+// You would probably want the statuses to be different, so, you can edit the list variable "statuses" which is at line about 46.
 // You might also want to edit the links in the vote command, or remove it entirely if you have nowhere to vote for it on. 
-var defaultPrefix = "?"  
+var defaultPrefix = "?" 
 var guildPrefix = ""
 const express = require('express');
 const app = express();
 const port = 6969;
-app.get('/', (req, res) => res.send('Choose bot is online!'));
+app.get('/', (req, res) => res.send('The man himself is online'));
 app.listen(port, () => console.log(`Logged in at ${Date.now()}. ChooseBot is online at https://localhost:${port}`));
 const redditImageFetcher = require("reddit-image-fetcher")
 const Discord = require('discord.js');
@@ -464,7 +464,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}vote`)) {
     .setColor('#0x855fb1')
     .setAuthor(`Vote for our server!`)
     .setDescription(`Wanna vote? Below are the links to vote for me on two platforms, and, voting for our discord server!
-    [Top.gg](https://vote.choosethis.org) | [Discord Bot List](https://discordbotlist.com/bots/choosebot) | [Server](http://vote.choosethis.org)   `)
+    [Top.gg](https://vote.choosethis.org) | [Discord Bot List](https://discordbotlist.com/bots/choosebot) | [Server](https://top.gg/servers/809668618597826632/)   `)
     .setFooter(`While you have this role, you get access to exclusive giveaways!`,"https://cdn.discordapp.com/avatars/"+message.author.id+"/"+message.author.avatar+".gif")
     .setThumbnail(`https://cdn.discordapp.com/attachments/822930845584064562/823291811212558416/BC_Animated.gif`)
     message.delete();
