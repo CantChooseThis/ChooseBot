@@ -3,7 +3,8 @@
 // "809668618597826632" is my own guild ID, that should be replaced with yours as well. Anything you'd like can be changed but please read what's in readme.md
 // "816457112804261908" is the bots ID, that should be replaced with your bots application ID.
 // Please contact me on discord at CantChooseThis#6982, or Cant@Choosethis.org for any questions related to the code. 
-// You would probably want the statuses to be different, so, you can edit the list variable "statuses" which is at line 45.
+// You would probably want the statuses to be different, so, you can edit the list variable "statuses" which is at line 46.
+// You might also want to edit the links in the vote command, or remove it entirely if you have nowhere to vote for it on. 
 var defaultPrefix = "?"  
 var guildPrefix = ""
 const express = require('express');
