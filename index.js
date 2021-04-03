@@ -3,9 +3,7 @@
 // "809668618597826632" is my own guild ID, that should be replaced with yours as well. Anything you'd like can be changed but please read what's in readme.md
 // "816457112804261908" is the bots ID, that should be replaced with your bots application ID.
 // Please contact me on discord at CantChooseThis#6982, or Cant@Choosethis.org for any questions related to the code. 
-// You would probably want the statuses to be different, so, you can edit the list variable "statuses" which is at line about 46.
-// You might also want to edit the links in the vote command, or remove it entirely if you have nowhere to vote for it on. 
-var defaultPrefix = "?" 
+// Youvar defaultPrefix = "?" 
 var guildPrefix = ""
 const express = require('express');
 const app = express();
@@ -18,6 +16,7 @@ const client = new Discord.Client(); // { ws: { properties: { $browser: "Discord
 const figlet = require('util').promisify(require('figlet'));
 const DIG = require("discord-image-generation");
 const prefix = require('discord-prefix');
+const fs = require('fs');
 client.on("guildCreate", guild => {
  let channelID;
  let channels = guild.channels.cache;
@@ -45,7 +44,7 @@ client.on('ready', () => {
  var statuses=[`?help`,`choosethis.org/choosebot`,`${client.guilds.cache.size} servers`,`r/funny`,'bruh','dis.choosethis.org 😳','vote.choosethis.org','choosethis.org','so many servers (i am watching a lot of them)','you','me','cantchoosethis','yo"ure mom',`reddit tts videos`,`disc.choosethis.org`,'?vote'] 
  var status = statuses[Math.floor(Math.random() * statuses.length)];
      client.user.setActivity(status,{ type: 'WATCHING' })
- }, 120000).then(console.log(`Status changed, it is now ${status}`)) // Runs this every x seconds.
+ }, 120000);  // Runs this every x seconds.
 }); 
 client.on('message', async message => {
 const timeTaken = Date.now() - message.createdTimestamp;
@@ -550,9 +549,14 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}website`)) {
   message.channel.send(webEmbed)                                                                                                                                 
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}ts`)) {// for cadenza
-  var songs = ['https://www.youtube.com/watch?v=XKaMUm7YwZc','https://www.youtube.com/watch?v=FeTHyZJvozc','https://www.youtube.com/watch?v=Uzii44SDYFA',`https://www.youtube.com/watch?v=aXzVF3XeS8M`,'https://www.youtube.com/watch?v=Ur_wAcYDnuA','https://www.youtube.com/watch?v=1iRbIYkccgw','https://www.youtube.com/watch?v=iTNZ-OzBoBo','https://www.youtube.com/watch?v=H9rBt-8jiBE','https://www.youtube.com/watch?v=sViZJopFdYg','https://www.youtube.com/watch?v=qybUgW7eoZQ','https://www.youtube.com/watch?v=7XLW5CvDQ7E','https://www.youtube.com/watch?v=3CUM7Z3TSmY','https://www.youtube.com/watch?v=CYHt7_RANiY','https://www.youtube.com/watch?v=qAGef4MdPdE','https://www.youtube.com/watch?v=zI4DS5GmQWE','https://www.youtube.com/watch?v=wMpqCRF7TKg','https://www.youtube.com/watch?v=ukxEKY_7MOc','https://www.youtube.com/watch?v=YPlNBb6I8qU','https://www.youtube.com/watch?v=tP4TTgt4nb0','https://www.youtube.com/watch?v=rqQHa2HcGtM','https://www.youtube.com/watch?v=IEPomqor2A8','https://www.youtube.com/watch?v=hP6QpMeSG6s','https://www.youtube.com/watch?v=c_p_TBaHvos','https://www.youtube.com/watch?v=9nIOx-ezlzA','https://www.youtube.com/watch?v=WuvhOD-mP8M','https://www.youtube.com/watch?v=Pz-f9mM3Ms8','https://www.youtube.com/watch?v=EXLgZZE072g','https://www.youtube.com/watch?v=AIFnKqIeEdY','https://www.youtube.com/watch?v=7EvwIw4gIyk','https://www.youtube.com/watch?v=o5SQIECedTY','https://www.youtube.com/watch?v=orXAg5dIMa8','https://www.youtube.com/watch?v=tOHcAc3r2kw','https://www.youtube.com/watch?v=GPQdWYNi8Wc','https://www.youtube.com/watch?v=i50QUXDeC80','https://www.youtube.com/watch?v=ryLGxpjwAhM','https://www.youtube.com/watch?v=OWbDJFtHl3w','https://www.youtube.com/watch?v=OuFnpmGwg5k','https://www.youtube.com/watch?v=KaM1bCuG4xo','https://www.youtube.com/watch?v=9bdLTPNrlEg','https://www.youtube.com/watch?v=MLV2SJKWk4M','https://www.youtube.com/watch?v=6TAPqXkZW_I','https://www.youtube.com/watch?v=DUnDkI7l9LQ','https://www.youtube.com/watch?v=6DP4q_1EgQQ','https://www.youtube.com/watch?v=2s5xdY6MCeI','https://www.youtube.com/watch?v=Vgt1d3eAm7A','https://www.youtube.com/watch?v=Is75wMxSo28','https://www.youtube.com/watch?v=zAiOfWu5xUk','https://www.youtube.com/watch?v=xYLxUJ9v6KU','https://www.youtube.com/watch?v=kRJKB291Z1g','https://www.youtube.com/watch?v=5XMCHTAbwtU','https://www.youtube.com/watch?v=117xdufmtMY','https://www.youtube.com/watch?v=iAv1Y1YIwm8','https://www.youtube.com/watch?v=5DT_ZkSLc4o','https://www.youtube.com/watch?v=FhPLQVlUiNQ', 'https://www.youtube.com watch?v=5U7bF68xcRg','https://www.youtube.com/watch?v=erGyUphZSt8','https://www.youtube.com/watch?v=FNEoPctNIUE','https://www.youtube.com/watch?v=FNEoPctNIUE','https://www.youtube.com/watch?v=6Z3QJ4L1Bg0','https://www.youtube.com/watch?v=J1oCCGSt6XA','https://www.youtube.com/watch?v=KkvTYrFIxNM'];
-  var song = songs[Math.floor(Math.random() * songs.length)];
-  message.channel.send(`Here is an amazing Taylor Swift song you should listen to! ${song}`)
+  fs.readFile("ts.txt", function (err, data) {
+    if (err) {
+      throw err;
+    }
+    const _links = data.toString().split("\n");
+    var _link = _links[Math.floor(Math.random() * _links.length)];
+  message.channel.send(`Here is an amazing Taylor Swift song you should listen to! ${_link}`)
+  })
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}purge`)) {
   let canManageMessages = message.channel.permissionsFor(message.author).has("MANAGE_MESSAGES", false);
@@ -717,7 +721,7 @@ if (message.guild.id === "809668618597826632") {
   let canManageServer = message.channel.permissionsFor(message.member).has("MANAGE_GUILD", false);
   if (!canManageServer) {
     if (message.content.includes(`discord.gg`)) {
-      message.delete().then(message.channel.send(`bruh <@${message.author.id}> just posted an invite link, how fucking cringe.`))
+      message.delete().then(message.channel.send(`bruh <@${message.author.id}> just posted an invite link, how cringe.`))
     }
   }
 }
@@ -729,6 +733,17 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}attach`)) {
     message.channel.send(attach).catch(console.error)
   }
   message.delete();
+}
+if (message.content.toLowerCase().startsWith(`${guildPrefix}say`)) {
+  const channel = message.mentions.channels.first()
+  var args = message.content.split('||').slice(1);
+  const bruhEmbed = new Discord.MessageEmbed()
+  .setColor(`RANDOM`)
+  .setTitle(`Message sent from #${message.channel.name}.`)
+  .setDescription(`${args[0]}`)
+  .setTimestamp()
+  .setFooter(`Sent by ${message.author.tag}`)
+  channel.send(bruhEmbed).then(message.delete());
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}misc`)) {
   const miscEmbed = new Discord.MessageEmbed()
