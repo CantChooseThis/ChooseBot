@@ -4,6 +4,7 @@
 // "816457112804261908" is the bots ID, that should be replaced with your bots application ID.
 // Please contact me on discord at CantChooseThis#6982, or Cant@Choosethis.org for any questions related to the code. 
 // Youvar defaultPrefix = "?" 
+var defaultPrefix = "?" 
 var guildPrefix = ""
 const express = require('express');
 const app = express();
@@ -546,10 +547,10 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}website`)) {
   .setDescription(`If you\'d like to, go to [choosethis.org](https://choosethis.org/)! That links to the homepage, but, if you go [here](https://choosethis.org/choosebot), you\'ll find my page!`)
   .setFooter(`thank u`)
   .setColor(`RANDOM`)
-  message.channel.send(webEmbed)                                                                                                                                 
+  message.channel.send(webEmbed)     
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}ts`)) {// for cadenza
-  fs.readFile("ts.txt", function (err, data) {
+  fs.readFile("ts.txt", function (err, data) { // ts.txt is attached. it is just a bunch of youtube links. if you'd like, you can replace all the links, or, you can just delete this command.
     if (err) {
       throw err;
     }
