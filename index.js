@@ -42,10 +42,10 @@ channel.send(welEmbed);
 client.on('ready', () => {
   console.log(`im in`)
  setInterval(() => { //${client.guilds.cache.size}
- var statuses=[`?help`,`choosethis.org/choosebot`,`${client.guilds.cache.size} servers`,`r/funny`,'bruh','dis.choosethis.org 😳','vote.choosethis.org','choosethis.org','so many servers (i am watching a lot of them)','you','me','cantchoosethis','yo"ure mom',`reddit tts videos`] 
+ var statuses=[`?help`,`choosethis.org/choosebot`,`${client.guilds.cache.size} servers`,`r/funny`,'bruh','dis.choosethis.org 😳','vote.choosethis.org','choosethis.org','so many servers (i am watching a lot of them)','you','me','cantchoosethis','yo"ure mom',`reddit tts videos`,`disc.choosethis.org`,'?vote'] 
  var status = statuses[Math.floor(Math.random() * statuses.length)];
      client.user.setActivity(status,{ type: 'WATCHING' })
- }, 120000); // Runs this every x seconds.
+ }, 120000).then(console.log(`Status changed, it is now ${status}`)) // Runs this every x seconds.
 }); 
 client.on('message', async message => {
 const timeTaken = Date.now() - message.createdTimestamp;
@@ -394,19 +394,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}meme`)){
 if (message.content.toLowerCase().startsWith(`${guildPrefix}embed`)) {
   if (message.author.id === "514268920627331082") {
     const embed = new Discord.MessageEmbed()
-    .setColor('FF69B4')
-    .setAuthor("Server Role Information!")
-    .setDescription(`This is info on all the roles we currnetly have!
-    <@&822935901700489267> | The Owner of the server.
-    <@&823058146586787910> | The Co-Owner of the server.
-    <@&809670688956350485> | Server Admins.
-    <@&823343894480551956> | Server Moderators.
-    <@&810004267296358412> | Server Boosters.
-    <@&809674506318381057> | Discord Bots.
-    <@&822936189023420446> | Bot Developers. You can get this role by telling us a bit about your bot and we'll check it out.
-    <@&822978389773778964> | Users who have posted good memes.
-    <@&822927309458767882> | Members, the default role after verifying.
-    `)
+    .setDescription(`[source](https://www.reddit.com/r/comedyheaven/comments/miulf6/bees/)`)
     message.channel.send(embed).then(message.delete());;
   }
 }
@@ -464,7 +452,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}vote`)) {
     .setColor('#0x855fb1')
     .setAuthor(`Vote for our server!`)
     .setDescription(`Wanna vote? Below are the links to vote for me on two platforms, and, voting for our discord server!
-    [Top.gg](https://vote.choosethis.org) | [Discord Bot List](https://discordbotlist.com/bots/choosebot) | [Server](https://top.gg/servers/809668618597826632/)   `)
+    [Top.gg](https://vote.choosethis.org) | [Discord Bot List](https://discordbotlist.com/bots/choosebot) | [Server](https://disc.choosethis.org)   `)
     .setFooter(`While you have this role, you get access to exclusive giveaways!`,"https://cdn.discordapp.com/avatars/"+message.author.id+"/"+message.author.avatar+".gif")
     .setThumbnail(`https://cdn.discordapp.com/attachments/822930845584064562/823291811212558416/BC_Animated.gif`)
     message.delete();
@@ -724,11 +712,6 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}fun`)) {
   IP [@user] - Sends someones (or the message authors) ｆａｋｅ ip.
   \`\`\``)
   message.channel.send(funEmbed)
-}
-if (message.author.id === "514268920627331082") {
-  var emojis = ["😀","😃","😄","😁","😀","😃","😄","😁","😆","😅","🤣","😂","🙂","🙃","😉","😊",'😇','🥰','😍','🤩',"😘",'😗','☺','😚','😙','😋','😛','😜',"🤪","😝",'🤑','🤗','🤭','🤫','🤔','🤐','🤨','😐','😶','😏','😒','🙄','😬','🤥','😌','😔','😪','🤤','😴','😷','🤒','🤢','🤮','🤧','🥵','🥶','🥴','😵','🤯','🥳','😎','🧐','😟','🙁','☹','😮','😯','😲','😳','🥺','😦','😧','😨','😰','😥','😢','😭','😱','😖','😣','😞','😓','😩','😫','🥱','😤','😡','😠','🤬','😈','👿','💀','☠','💩','🤡','👹','👺','👻','👽','👾','🤖','😺','😸','😸','😹','😻','😼','😽','🙀','😿','😾','🙈','🙉','🙊','💋','💌','💘','💝','💖','💗','💓','💕','💟']
-  var emoji = emojis[Math.floor(Math.random() * emojis.length)];
-  message.react(emoji)
 }
 if (message.guild.id === "809668618597826632") {
   let canManageServer = message.channel.permissionsFor(message.member).has("MANAGE_GUILD", false);
