@@ -6,7 +6,8 @@ Also, you can vote for my bot [`here`](https://vote.choosethis.org) and invite i
 
 You will need to install the following packages in your codes terminal to have everything work properly, using "`npm i PACKAGE-NAME`"
 
-```@top-gg/sdk
+```
+@top-gg/sdk
 
 better-redddit
 
@@ -52,5 +53,6 @@ top.gg
 
 topgg-autoposter
 
-fs```
+fs
+```
 
