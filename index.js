@@ -550,7 +550,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}website`)) {
   message.channel.send(webEmbed)     
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}ts`)) {// for cadenza
-  fs.readFile("ts.txt", function (err, data) { // ts.txt is attached. it is just a bunch of youtube links. if you'd like, you can replace all the links, or, you can just delete this command.
+  fs.readFile("ts.txt", function (err, data) { // ts.txt is attached. it is just a bunch of youtube links. if you'd like, you can replace all the links, or, you can just delete this command
     if (err) {
       throw err;
     }
