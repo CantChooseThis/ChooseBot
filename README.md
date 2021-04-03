@@ -54,4 +54,3 @@ topgg-autoposter
 
 fs
 ``` 
-<!---> github.com/cantchoosethis/choosebot <--->
