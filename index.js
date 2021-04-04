@@ -13,7 +13,7 @@ app.get('/', (req, res) => res.send('The man himself is online'));
 app.listen(port, () => console.log(`Logged in at ${Date.now()}. ChooseBot is online at https://localhost:${port}`));
 const redditImageFetcher = require("reddit-image-fetcher")
 const Discord = require('discord.js');
-const client = new Discord.Client(); // { ws: { properties: { $browser: "Discord iOS" }} }
+const client = new Discord.Client({ ws: { properties: { $browser: "Discord iOS" }} });;
 const figlet = require('util').promisify(require('figlet'));
 const DIG = require("discord-image-generation");
 const prefix = require('discord-prefix');
@@ -666,7 +666,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}addemoji`)) {
         }
         else if (message.member.hasPermission(`MANAGE_EMOJIS`)){
                 try{
-                    await message.guild.emojis.create(`${args[0]}`, `${args[1]}`)
+                    await message.guild.emojis.create(`${args[0]}`, `${args[1]}`).then(message.delete());
                     message.channel.send(`Succesfully added your emoji ":${args[1]}:"!`)
                 } catch (error) {
                     console.error(error);
@@ -746,16 +746,6 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}say`)) {
   .setFooter(`Sent by ${message.author.tag}`)
   channel.send(bruhEmbed).then(message.delete());
 }
-if (message.content !== "") { // Message content "" just means it is an uncaptioned image.
-  if (message.channel.id === "828097106400641065") {
-    message.delete()
-    message.channel.send(`Haha lmao <@${message.author.id}> just tried to send something in <#${message.channel.id}> how stupid. Don\'t they know this is an image only channel? What an idiot.`).then((msg) => {
-      setTimeout(function() {
-        msg.delete();
-      }, 12000)
-    })
-  }
-}
 if (message.content.toLowerCase().startsWith(`${guildPrefix}misc`)) {
   const miscEmbed = new Discord.MessageEmbed()
   .setColor(`#0xff0000`)
@@ -784,5 +774,28 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}misc`)) {
   \`\`\``)
   message.channel.send(miscEmbed)
 }
-}}) // complete end of code
+if (message.channel.id === "828097106400641065") {
+  if (message.content !== "") {
+    message.delete();
+    message.channel.send(`Haha lmao <@${message.author.id}> just tried to send something in <#${message.channel.id}> how stupid. Don\'t they know this is an image only channel? What an idiot.`).then((msg) => {
+          setTimeout(function() {
+            msg.delete();
+          }, 12000)
+        })
+  }
+}
+}}) // complete end of messave event
+client.on('messageUpdate', (oldMessage, newMessage) => { // this is like if someone edits their message
+  if (newMessage.channel.id === "828097106400641065") { // replace this ID with a channel you want for only un-captioned images. same goes for above very similar code.
+  // Message content "" just means it is an uncaptioned image.
+        if (newMessage.content !== "") {
+          newMessage.delete()
+        }
+        newMessage.channel.send(`LMAO <@${newMessage.author.id}> TRIED TO EDIT THEIR MESSAGE TO BYPASS THE FILTER\nWHAT AN IDIOT LMAOOO 😂 DONT THEY KNOW THIS IS <#${newMessage.channel.id}>??? NO NON-IMAGES IN HERE LMAOO`).then((msg) => {
+          setTimeout(function() {
+            msg.delete();
+          }, 12000)
+        })
+  }
+})
 client.login(process.env.TOKEN); // You will want to make a file named ".env" and put "TOKEN= <your bot token>", OR, you can just put your token in the code. Like this, "client.login(<your token here>)."
