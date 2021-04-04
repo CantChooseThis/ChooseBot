@@ -3,7 +3,7 @@
 // "809668618597826632" is my own guild ID, that should be replaced with yours as well. Anything you'd like can be changed but please read what's in readme.md
 // "816457112804261908" is the bots ID, that should be replaced with your bots application ID.
 // Please contact me on discord at CantChooseThis#6982, or Cant@Choosethis.org for any questions related to the code. 
-// Youvar defaultPrefix = "?" 
+// You can remove defaultPrefix = "?" if you need to. GuildPrefix and default prefix are if you want a custom prefix, if not replace all mentions of them with whatever you'd like. 
 var defaultPrefix = "?" 
 var guildPrefix = ""
 const express = require('express');
@@ -745,6 +745,16 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}say`)) {
   .setTimestamp()
   .setFooter(`Sent by ${message.author.tag}`)
   channel.send(bruhEmbed).then(message.delete());
+}
+if (message.content !== "") { // Message content "" just means it is an uncaptioned image.
+  if (message.channel.id === "828097106400641065") {
+    message.delete()
+    message.channel.send(`Haha lmao <@${message.author.id}> just tried to send something in <#${message.channel.id}> how stupid. Don\'t they know this is an image only channel? What an idiot.`).then((msg) => {
+      setTimeout(function() {
+        msg.delete();
+      }, 12000)
+    })
+  }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}misc`)) {
   const miscEmbed = new Discord.MessageEmbed()
