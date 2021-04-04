@@ -498,25 +498,33 @@ if (message.content.toLowerCase().startsWith(`<@!816457112804261908>prefix`)) {
   }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}kick`)) {
-  if (message.member.hasPermission(`KICK_MEMBERS`)) {
-    var member = message.mentions.members.first();
-    var reason = message.content.substring(guildPrefix.length+"kick".length+24)
-    member.kick({reason: `Kick reason not currently supported. Please check with the person who ran the command for the reason!`}).then((member) => {
-      message.channel.send(`${member} has been kicked from ${message.guild.name} for "${reason}".`)
-    });
+  if (message.guild.me.hasPermission(`KICK_MEMBERS`)) {
+    if (message.member.hasPermission(`KICK_MEMBERS`)) {
+      var member = message.mentions.members.first();
+      var reason = message.content.substring(guildPrefix.length+"kick".length+24)
+      member.kick({reason: `Kick reason not currently supported. Please check with the person who ran the command for the reason!`}).then((member) => {
+        message.channel.send(`${member} has been kicked from ${message.guild.name} for "${reason}".`)
+      });
+    } else {
+      message.channel.send(`${message.author.tag}, you do not have the \`KICK_MEMBERS\` permission and cannot perform this action.`)
+    }
   } else {
-    message.channel.send(`${message.author.tag}, you do not have the \`KICK_MEMBERS\` permission and cannot perform this action.`)
+    message.channel.send(`oops! Thats an error! I don't have permission to ban them!!! Please get an admin to give me the \`KICK_MEMBERS\` permission and try again!`)
   }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}ban`)) {
-  if (message.member.hasPermission(`BAN_MEMBERS`)) {
-    var member = message.mentions.members.first();
-    var reason = message.content.substring(guildPrefix.length+"ban".length+24)
-    member.ban({reason: `${reason}`}).then((member) => {
-      message.channel.send(`${member} has been banned from ${message.guild.name} for "${reason}".`)
-    });
+  if (message.guild.me.hasPermission(`BAN_MEMBERS`)) {
+    if (message.member.hasPermission(`BAN_MEMBERS`)) {
+      var member = message.mentions.members.first();
+      var reason = message.content.substring(guildPrefix.length+"ban".length+24)
+      member.ban({reason: `${reason}`}).then((member) => {
+        message.channel.send(`${member} has been banned from ${message.guild.name} for "${reason}".`)
+      });
+    } else {
+      message.channel.send(`${message.author.tag}, you do not have the \`BAN_MEMBERS\` permission and cannot perform this action.`)
+    }
   } else {
-    message.channel.send(`${message.author.tag}, you do not have the \`BAN_MEMBERS\` permission and cannot perform this action.`)
+    message.channel.send(`woops! Thats an error. I don't have permission to ban them! Please tell a server admin to give me the \`BAN_MEMBERS\` permission and try again!`)
   }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}unban`)) {
@@ -532,14 +540,18 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}unban`)) {
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}slowmode`)) {
   let canManageChannel = message.channel.permissionsFor(message.member).has("MANAGE_CHANNELS", false)
-  if (canManageChannel) {
-    var args = message.content.split(' ').slice(1); 
-    message.channel.setRateLimitPerUser(args[0], `Slowmode set to ${args[0]} by ${message.author.username}` )
-    message.channel.send(`Set the slowmode to \`${args[0]}s\` by ${message.author.username}!`)
-  } else if (!canManageChannel) {
-    message.channel.send(`oops! <@${message.author.id}> ,you don\'t have the \`MANAGE_CHANNELS\` permission!`)
+  if (message.guild.me.hasPermission(`MANAGE_CHANNELS`)) {
+    if (canManageChannel) {
+      var args = message.content.split(' ').slice(1); 
+      message.channel.setRateLimitPerUser(args[0], `Slowmode set to ${args[0]} by ${message.author.username}` )
+      message.channel.send(`Set the slowmode to \`${args[0]}s\` by ${message.author.username}!`)
+    } else if (!canManageChannel) {
+      message.channel.send(`oops! <@${message.author.id}> ,you don\'t have the \`MANAGE_CHANNELS\` permission!`)
+    }
+    message.delete();
+  } else {
+    message.channel.send('well.. thats an error :( Looks like I don\'t have the `MANAGE_CHANNELS` permission :(. Please get an admin to give me this permission!')
   }
-  message.delete();
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}website`)) {
   const webEmbed = new Discord.MessageEmbed()
@@ -561,15 +573,19 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}ts`)) {// for cadenz
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}purge`)) {
   let canManageMessages = message.channel.permissionsFor(message.author).has("MANAGE_MESSAGES", false);
-  if (canManageMessages) {
-    var args = message.content.split(' ').slice(1);
-    if (parseInt(args[0]) < 100 ) {
-      message.channel.bulkDelete(args[0]).then(message.channel.send(`\`${args[0]}\` messages purged by ${message.author.tag}!`))
-    } else if (parseInt(args[0]) > 100) {
-      message.channel.send(`ooooops! I cannot purge more than 100 messages at once.`)
+  if (message.guild.me.hasPermission(`MANAGE_MESSAGES`)) {
+    if (canManageMessages) {
+      var args = message.content.split(' ').slice(1);
+      if (parseInt(args[0]) < 100 ) {
+        message.channel.bulkDelete(args[0]).then(message.channel.send(`\`${args[0]}\` messages purged by ${message.author.tag}!`))
+      } else if (parseInt(args[0]) > 100) {
+        message.channel.send(`ooooops! I cannot purge more than 100 messages at once.`)
+      }
+    } else if (!canManageMessages) {
+      message.channel.send(`Ooops! You don\'t have the \`MANAGE_MESSAGES\` permission and cannot do this.`)
     }
-  } else if (!canManageMessages) {
-    message.channel.send(`Ooops! You don\'t have the \`MANAGE_MESSAGES\` permission and cannot do this.`)
+  } else {
+    message.channel.send(`oops.. well theres an error. I can't do that! I don't have the \`MANAGE_MESSAGES\` permission! Please get an admin to give me this permission!`)
   }
 }
 // if (message.channel.id === "826702645116010526") {
@@ -577,14 +593,18 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}purge`)) {
 // } 
 if (message.content.toLowerCase().startsWith(`${guildPrefix}rename`)) {
   let canManageChannels = message.channel.permissionsFor(message.member).has("MANAGE_CHANNELS", false);
-  if (canManageChannels) {
-    var args = message.content.split(' ').slice(1);
-    if (parseInt(args[0]).length > 100) {
-      message.channel.send(`oops! I cannot rename this channel. The maximum character limit for channel names is 100 characters!`)
-    } else {
-      message.channel.setName(`${args[0]}`)
-      message.channel.send(`${message.author.tag} set the channel name to ${args[0]}!`)
+  if (message.guild.me.hasPermission(`MANAGE_CHANNELS`)) {
+    if (canManageChannels) {
+      var args = message.content.split(' ').slice(1);
+      if (parseInt(args[0]).length > 100) {
+        message.channel.send(`oops! I cannot rename this channel. The maximum character limit for channel names is 100 characters!`)
+      } else {
+        message.channel.setName(`${args[0]}`)
+        message.channel.send(`${message.author.tag} set the channel name to ${args[0]}!`)
+      }
     }
+  } else {
+    message.chanenl.send(`well... thats an error. I can\'t change this channels name!! I don'\t have the \`MANAGE_CHANNELS\` permission and cannot do this. Please get an admin to give me this permission and try again!`)
   }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}userinfo`)) {
@@ -633,10 +653,14 @@ if (message.content.toLowerCase().includes(`(dababy)`)) {
   }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}name`)) {
-  if (message.author.id === "514268920627331082") {
-    var args = message.content.split('/').slice(1);
-    message.guild.setName(args[0])
-    message.channel.send(`ok idk why you wanna do this but the new server name is \`${args[0]}\``)
+  if (message.guild.me.hasPermission(`MANAGE_GUILD`)) {
+    if (message.author.hasPermission(`MANAGE_GUILD`)) {
+      var args = message.content.split('/').slice(1);
+      message.guild.setName(args[0])
+      message.channel.send(`ok idk why you wanna do this but the new server name is \`${args[0]}\``)
+    }
+  } else {
+    message.channel.send('Well.. thats an error :( I don\'t have the `MANAGE_GUILD` permission and cannot do this. :(')
   }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}reply`)) {
@@ -780,13 +804,16 @@ if (message.channel.id === "828097106400641065") {
     message.channel.send(`Haha lmao <@${message.author.id}> just tried to send something in <#${message.channel.id}> how stupid. Don\'t they know this is an image only channel? What an idiot.`).then((msg) => {
           setTimeout(function() {
             msg.delete();
-          }, 12000)
+          }, 12121)
         })
   }
 }
-}}) // complete end of messave event
-client.on('messageUpdate', (oldMessage, newMessage) => { // this is like if someone edits their message
-  if (newMessage.channel.id === "828097106400641065") { // replace this ID with a channel you want for only un-captioned images. same goes for above very similar code.
+if (message.content.toLowerCase().startsWith(`${guildPrefix}test`)) {
+  client.users.cache.get(`514268920627331082`).send(`bruh`)
+}
+}}) // complete end of message event
+client.on('messageUpdate', (oldMessage, newMessage) => {
+  if (newMessage.channel.id === "828097106400641065") {
   // Message content "" just means it is an uncaptioned image.
         if (newMessage.content !== "") {
           newMessage.delete()
@@ -794,7 +821,7 @@ client.on('messageUpdate', (oldMessage, newMessage) => { // this is like if some
         newMessage.channel.send(`LMAO <@${newMessage.author.id}> TRIED TO EDIT THEIR MESSAGE TO BYPASS THE FILTER\nWHAT AN IDIOT LMAOOO 😂 DONT THEY KNOW THIS IS <#${newMessage.channel.id}>??? NO NON-IMAGES IN HERE LMAOO`).then((msg) => {
           setTimeout(function() {
             msg.delete();
-          }, 12000)
+          }, 12121)
         })
   }
 })
