@@ -8,7 +8,7 @@ var defaultPrefix = "?"
 var guildPrefix = ""
 const express = require('express');
 const app = express();
-const port = 6969;
+const port = 6969; 
 app.get('/', (req, res) => res.send('The man himself is online'));
 app.listen(port, () => console.log(`Logged in at ${Date.now()}. ChooseBot is online at https://localhost:${port}`));
 const redditImageFetcher = require("reddit-image-fetcher")
@@ -40,9 +40,9 @@ const welEmbed = new Discord.MessageEmbed()
 channel.send(welEmbed);
 });
 client.on('ready', () => {
-  console.log(`im in`)
+  console.log(`im in\n`)
  setInterval(() => { //${client.guilds.cache.size}
- var statuses=[`?help`,`choosethis.org/choosebot`,`${client.guilds.cache.size} servers`,`r/funny`,'bruh','dis.choosethis.org 😳','vote.choosethis.org','choosethis.org','so many servers (i am watching a lot of them)','you','me','cantchoosethis','yo"ure mom',`reddit tts videos`,`disc.choosethis.org`,'?vote'] 
+ var statuses=[`?help`,`choosethis.org/choosebot`,`${client.guilds.cache.size} servers`,`r/funny`,'bruh','dis.choosethis.org 😳','vote.choosethis.org','choosethis.org','so many servers (i am watching a lot of them)','you','me','cantchoosethis','yo"ure mom',`reddit tts videos`,`disc.choosethis.org`,'?vote','epic dababy memes 2021 no scam'] 
  var status = statuses[Math.floor(Math.random() * statuses.length)];
      client.user.setActivity(status,{ type: 'WATCHING' })
  }, 120000);  // Runs this every x seconds.
@@ -636,7 +636,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}pin `)) {
 }
 if (message.content.toLowerCase().includes(`yeah yeah`)) {
   if (!message.author.bot) {
-    if (message.guild.id === "809668618597826632") {
+    if (message.guild.id === "809668618597826632" || message.guild.id === "828271230171217921") {
       message.channel.send (`(dababy) less goo`)
       message.react("826742690414198814")
       message.react("826743579984658454")
@@ -645,7 +645,7 @@ if (message.content.toLowerCase().includes(`yeah yeah`)) {
 }
 if (message.content.toLowerCase().includes(`(dababy)`)) {
   if (!message.author.bot) {
-    if (message.guild.id === "809668618597826632") {
+    if (message.guild.id === "809668618597826632" || message.guild.id === "828271230171217921") {
       message.channel.send(`yeah yeah (less goo)`)
       message.react("826743579984658454")
       message.react("826742690414198814")
@@ -751,7 +751,7 @@ if (message.guild.id === "809668618597826632") {
   }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}attach`)) {
-  if (message.guild.id === "809668618597826632") {
+  if (message.author.id === "514268920627331082") {
     var args = message.content.split(' ').slice(1);
     let image = args[0]
     let attach = new Discord.MessageAttachment(`${args[0]}`)
@@ -807,9 +807,6 @@ if (message.channel.id === "828097106400641065") {
           }, 12121)
         })
   }
-}
-if (message.content.toLowerCase().startsWith(`${guildPrefix}test`)) {
-  client.users.cache.get(`514268920627331082`).send(`bruh`)
 }
 }}) // complete end of message event
 client.on('messageUpdate', (oldMessage, newMessage) => {
