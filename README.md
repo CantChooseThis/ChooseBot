@@ -54,4 +54,6 @@ topgg-autoposter
 fs
 
 discord-tts
+
+youtube-search
 ```
