@@ -6,6 +6,13 @@
 // You can remove defaultPrefix = "?" if you need to. GuildPrefix and default prefix are if you want a custom prefix, if not replace all mentions of them with whatever you'd like. 
 var defaultPrefix = "?" 
 var guildPrefix = ""
+const search = require('youtube-search');
+const opts = {
+  maxResults: 10,
+  key: process.env.YT_KEY /* make sure to add a variable in your .env file called "YT_KEY" and assign it like this: 
+  YT_KEY=YOUTUBE_API_TOKEN_HERE
+  */
+};
 const discordTTS=require("discord-tts");
 const express = require('express');
 const app = express();
@@ -571,7 +578,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}ts`)) {// for cadenz
     }
     const _links = data.toString().split("\n");
     var _link = _links[Math.floor(Math.random() * _links.length)];
-  message.channel.send(`Here is an amazing Taylor Swift song you should listen to! ${_link}`)
+  message.channel.send(`Here is an amazing Taylor Swift song you should listen to! <${_link}>`)
   })
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}purge`)) {
@@ -622,7 +629,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}userinfo`)) {
       Bot: ${users.bot} 
       Creation Date: ${users.createdAt}
       Nickname: ${member.nickname} 
-      Flags: ${users.flags.toArray()} || [[Avatar URL]](${users.displayAvatarURL()}) 
+      Flags: ${users.flags.toArray()} || [\`[Avatar URL]\`](${users.displayAvatarURL()}) 
       ID: ${users.id}`)
       message.channel.startTyping();
       setTimeout(() => {
@@ -827,14 +834,47 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}ascii`)){
 if(message.content.toLowerCase().startsWith(`${guildPrefix}tts`)){
   let args = message.content.split(` `).slice(1);
   let msg = args.join(" ")
-  const broadcast = client.voice.createBroadcast();
-  var channelId=message.member.voice.channelID;
-  var channel=client.channels.cache.get(channelId);
-  channel.join().then(connection => {
-  broadcast.play(discordTTS.getVoiceStream(`${msg}`));
-  const dispatcher=connection.play(broadcast);
-  message.channel.send(`I said \`"${msg}"\` in your voice channel!`)
-        });
+  if (msg.length < 200) { // if api can load it
+    if (msg) { 
+      if (message.member.voice.channel) {
+        const broadcast = client.voice.createBroadcast();
+        var channelId=message.member.voice.channelID;
+        var channel=client.channels.cache.get(channelId);
+        channel.join().then(connection => {
+        broadcast.play(discordTTS.getVoiceStream(`${msg}`));
+        const dispatcher=connection.play(broadcast);
+        message.channel.send(`I said \`"${msg}"\` in your voice channel!`)
+        });;;
+      } else { // error if not in vc
+        message.channel.send(`Ooops! This command is only availible in Voice Channels! Please connect to one and try using this command again!`)
+      }
+    } else { // error if no syntax is provided
+        message.channel.send(`well i gotta say SOMETHING.. please tell me what to say and use this command again!`)
+    }
+  } else {
+    message.channel.send(`Oops! I can\'t say anything greater than 200 characters in length.`)
+  }
+}
+if (message.content.toLowerCase().startsWith(`${guildPrefix}ytsearch`)) {
+  let args = message.content.split(` `).slice(1);
+  let msg = args.join(" ")
+  search(msg ,opts, function(err, results) {
+    if (err) return console.log(err)
+    message.channel.send(`Here is a search result for "\`${msg}\`"! ${results[0].link}`)
+  })
+}
+if (message.content.toLowerCase().startsWith(`${guildPrefix}ytthumb`)) {
+  let args = message.content.split(` `).slice(1);
+  let msg = args.join(" ")
+  search(msg, opts, function(err, results){
+    if (err) return console.log(err);
+    const bruhEmbed = new Discord.MessageEmbed()
+    .setTitle(`Thumbnail for: ${results[0].title} `)
+    .setDescription(` [\`Original Video\`](${results[0].link}) `)
+    .setImage(`https://i3.ytimg.com/vi/${results[0].id}/maxresdefault.jpg`)
+    .setFooter(`Video by ${results[0].channelTitle}`)
+    message.channel.send(bruhEmbed)
+  })
 }
 }}) // complete end of message event
 client.on('messageUpdate', (oldMessage, newMessage) => {
