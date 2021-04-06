@@ -6,6 +6,7 @@
 // You can remove defaultPrefix = "?" if you need to. GuildPrefix and default prefix are if you want a custom prefix, if not replace all mentions of them with whatever you'd like. 
 var defaultPrefix = "?" 
 var guildPrefix = ""
+const discordTTS=require("discord-tts");
 const express = require('express');
 const app = express();
 const port = 6969; 
@@ -742,6 +743,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}fun`)) {
   8ball <question> - Ask the magic 8ball a question and it will answer!
   IP [@user] - Sends someones (or the message authors) ｆａｋｅ ip.
   Ascii <Text> - Converts text to an ascii banner and sends it!
+  TTS <message> - Joins the user\'s voice channel and says a word / phrase.
   \`\`\``)
   message.channel.send(funEmbed)
 }
@@ -818,9 +820,21 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}ascii`)){
     if (err) {
       console.error
     }
-    if (data.length > 2000) return message.channel.send(`Oops! Please provide me a shorter string to convert.`)
-    message.channel.send('```' + data + '```')
+    if (data.length > 2000) return message.channel.send(`Oops! Please provide me a shorter string to convert!`)
+    message.channel.send('```'+data+'```')
   })
+}
+if(message.content.toLowerCase().startsWith(`${guildPrefix}tts`)){
+  let args = message.content.split(` `).slice(1);
+  let msg = args.join(" ")
+  const broadcast = client.voice.createBroadcast();
+  var channelId=message.member.voice.channelID;
+  var channel=client.channels.cache.get(channelId);
+  channel.join().then(connection => {
+  broadcast.play(discordTTS.getVoiceStream(`${msg}`));
+  const dispatcher=connection.play(broadcast);
+  message.channel.send(`I said \`"${msg}"\` in your voice channel!`)
+        });
 }
 }}) // complete end of message event
 client.on('messageUpdate', (oldMessage, newMessage) => {
