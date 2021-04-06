@@ -18,6 +18,8 @@ const figlet = require('util').promisify(require('figlet'));
 const DIG = require("discord-image-generation");
 const prefix = require('discord-prefix');
 const fs = require('fs');
+
+
 client.on("guildCreate", guild => {
  let channelID;
  let channels = guild.channels.cache;
@@ -739,6 +741,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}fun`)) {
   Meme - Sends a random meme.
   8ball <question> - Ask the magic 8ball a question and it will answer!
   IP [@user] - Sends someones (or the message authors) ｆａｋｅ ip.
+  Ascii <Text> - Converts text to an ascii banner and sends it!
   \`\`\``)
   message.channel.send(funEmbed)
 }
@@ -807,6 +810,17 @@ if (message.channel.id === "828097106400641065") {
           }, 12121)
         })
   }
+}
+if (message.content.toLowerCase().startsWith(`${guildPrefix}ascii`)){
+  let args = message.content.split(` `).slice(1);
+  let msg = args.join(" ")
+  figlet.text(msg, function (err, data){
+    if (err) {
+      console.error
+    }
+    if (data.length > 2000) return message.channel.send(`Oops! Please provide me a shorter string to convert.`)
+    message.channel.send('```' + data + '```')
+  })
 }
 }}) // complete end of message event
 client.on('messageUpdate', (oldMessage, newMessage) => {
