@@ -52,10 +52,10 @@ channel.send(welEmbed);
 client.on('ready', () => {
   console.log(`im in\n`)
  setInterval(() => { //${client.guilds.cache.size}
- var statuses=[`?help`,`choosethis.org/choosebot`,`${client.guilds.cache.size} servers`,`r/funny`,'bruh','dis.choosethis.org 😳','vote.choosethis.org','choosethis.org','so many servers (i am watching a lot of them)','you','me','cantchoosethis','yo"ure mom',`reddit tts videos`,`disc.choosethis.org`,'?vote','epic dababy memes 2021 no scam'] 
+ var statuses=[`?help`,`choosethis.org/choosebot`,`${client.guilds.cache.size} servers`,`r/funny`,'bruh','dis.choosethis.org 😳','vote.choosethis.org','choosethis.org','so many servers (i am watching a lot of them)','you','me','cantchoosethis','yo"ure mom',`reddit tts videos`,`disc.choosethis.org`,'?vote','epic dababy memes 2021 no scam','dbl.choosethis.org','invite.choosethis.org','status.choosethis.org'] 
  var status = statuses[Math.floor(Math.random() * statuses.length)];
      client.user.setActivity(status,{ type: 'WATCHING' })
- }, 120000);  // Runs this every x seconds.
+ }, 120000);  // if this is under 120,000, you risk getting ratelimiting. 120,000 is 120 seconds (2 minutes). I do not recommend going under this.
 }); 
 client.on('message', async message => {
 const timeTaken = Date.now() - message.createdTimestamp;
@@ -834,9 +834,8 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}ascii`)){
 if(message.content.toLowerCase().startsWith(`${guildPrefix}tts`)){
   let args = message.content.split(` `).slice(1);
   let msg = args.join(" ")
-  // let mode = msg.substring(1)
   if (msg.length < 200) { // if api can load it
-    if (msg) { // i wanna print msg.substring(1) cause that is minus the mode
+    if (msg) { 
       if (message.member.voice.channel) {
         const broadcast = client.voice.createBroadcast();
         var channelId=message.member.voice.channelID;
