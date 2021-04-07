@@ -26,7 +26,7 @@ const figlet = require('util').promisify(require('figlet'));
 const DIG = require("discord-image-generation");
 const prefix = require('discord-prefix');
 const fs = require('fs');
-
+const amongstats = require("amongstats");
 
 client.on("guildCreate", guild => {
  let channelID;
@@ -834,8 +834,9 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}ascii`)){
 if(message.content.toLowerCase().startsWith(`${guildPrefix}tts`)){
   let args = message.content.split(` `).slice(1);
   let msg = args.join(" ")
+  // let mode = msg.substring(1)
   if (msg.length < 200) { // if api can load it
-    if (msg) { 
+    if (msg) { // i wanna print msg.substring(1) cause that is minus the mode
       if (message.member.voice.channel) {
         const broadcast = client.voice.createBroadcast();
         var channelId=message.member.voice.channelID;
