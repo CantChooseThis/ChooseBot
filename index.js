@@ -27,7 +27,6 @@ const DIG = require("discord-image-generation");
 const prefix = require('discord-prefix');
 const fs = require('fs');
 const amongstats = require("amongstats");
-
 client.on("guildCreate", guild => {
  let channelID;
  let channels = guild.channels.cache;
@@ -109,7 +108,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}invite`)) { //invite
 const invEmbed = new Discord.MessageEmbed()
 .setColor('0xffaaaa')
 .setTitle('Adopt Me 😳')
-.setDescription('You can [Click Here](https://invite.choosethis.org) to invite me! (This requires you to have the `Manage Server` permission in the server.)')
+.setDescription('You can [Click Here](https://discord.com/oauth2/authorize?client_id=816457112804261908&scope=bot&permissions=1882582134) to invite me! (This requires you to have the `Manage Server` permission in the server.)')
 .setFooter('Bleep Bloop Imma Bot')
 message.channel.send(invEmbed)
 }
@@ -648,7 +647,6 @@ if (message.content.toLowerCase().includes(`yeah yeah`)) {
   if (!message.author.bot) {
     if (message.guild.id === "809668618597826632" || message.guild.id === "828271230171217921") {
       message.channel.send (`(dababy) less goo`)
-      message.react("826742690414198814")
       message.react("826743579984658454")
     }
   }
@@ -658,7 +656,6 @@ if (message.content.toLowerCase().includes(`(dababy)`)) {
     if (message.guild.id === "809668618597826632" || message.guild.id === "828271230171217921") {
       message.channel.send(`yeah yeah (less goo)`)
       message.react("826743579984658454")
-      message.react("826742690414198814")
     }
   }
 }
@@ -854,6 +851,7 @@ if(message.content.toLowerCase().startsWith(`${guildPrefix}tts`)){
   } else {
     message.channel.send(`Oops! I can\'t say anything greater than 200 characters in length.`)
   }
+  console.log(client.user.speaking)
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}ytsearch`)) {
   let args = message.content.split(` `).slice(1);
