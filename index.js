@@ -829,29 +829,32 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}ascii`)){
   })
 }
 if(message.content.toLowerCase().startsWith(`${guildPrefix}tts`)){
-  let args = message.content.split(` `).slice(1);
-  let msg = args.join(" ")
-  if (msg.length < 200) { // if api can load it
-    if (msg) { 
-      if (message.member.voice.channel) {
-        const broadcast = client.voice.createBroadcast();
-        var channelId=message.member.voice.channelID;
-        var channel=client.channels.cache.get(channelId);
-        channel.join().then(connection => {
-        broadcast.play(discordTTS.getVoiceStream(`${msg}`));
-        const dispatcher=connection.play(broadcast);
-        message.channel.send(`I said \`"${msg}"\` in your voice channel!`)
-        });;;
-      } else { // error if not in vc
-        message.channel.send(`Ooops! This command is only availible in Voice Channels! Please connect to one and try using this command again!`)
+  if (message.guild.me.hasPermission(`CONNECT`) && (message.guild.me.hasPermission(`SPEAK`))) {
+    let args = message.content.split(` `).slice(1);
+    let msg = args.join(" ")
+    if (msg.length < 200) { // if api can load it
+      if (msg) { 
+        if (message.member.voice.channel) {
+          const broadcast = client.voice.createBroadcast();
+          var channelId=message.member.voice.channelID;
+          var channel=client.channels.cache.get(channelId);
+          channel.join().then(connection => {
+          broadcast.play(discordTTS.getVoiceStream(`${msg}`));
+          const dispatcher=connection.play(broadcast);
+          message.channel.send(`I said \`"${msg}"\` in your voice channel!`)
+          });;;
+        } else { // error if not in vc
+          message.channel.send(`Ooops! This command is only availible in Voice Channels! Please connect to one and try using this command again!`)
+        }
+      } else { // error if no syntax is provided
+          message.channel.send(`well i gotta say SOMETHING.. please tell me what to say and use this command again!`)
       }
-    } else { // error if no syntax is provided
-        message.channel.send(`well i gotta say SOMETHING.. please tell me what to say and use this command again!`)
+    } else {
+      message.channel.send(`Oops! I can\'t say anything greater than 200 characters in length.`)
     }
   } else {
-    message.channel.send(`Oops! I can\'t say anything greater than 200 characters in length.`)
+    message.channel.send(`ooops! I cannot join your voice channel! I do not have permissions to join this channel!`)
   }
-  console.log(client.user.speaking)
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}ytsearch`)) {
   let args = message.content.split(` `).slice(1);
@@ -873,6 +876,18 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}ytthumb`)) {
     .setFooter(`Video by ${results[0].channelTitle}`)
     message.channel.send(bruhEmbed)
   })
+}
+if (message.content.toLowerCase().startsWith(`${guildPrefix}eval`)) {
+  if (message.author.id === "514268920627331082") {
+    let args = message.content.split(` `).slice(1);
+    let msg = args.join(" ")
+    let code = eval(msg)
+    console.log(`${msg} evaluated is: ${code}`)
+  } else {
+    console.log(`${message.author.tag} tried to eval ${message.content}`)
+    message.channel.send('oops! Only the bot owner can run this.')
+  }
+  message.delete();
 }
 }}) // complete end of message event
 client.on('messageUpdate', (oldMessage, newMessage) => {
