@@ -4,12 +4,13 @@
 // "816457112804261908" is the bots ID, that should be replaced with your bots application ID.
 // Please contact me on discord at CantChooseThis#6982, or Cant@Choosethis.org for any questions related to the code. 
 // You can remove defaultPrefix = "?" if you need to. GuildPrefix and default prefix are if you want a custom prefix, if not replace all mentions of them with whatever you'd like. 
-var defaultPrefix = "?" 
-var guildPrefix = ""
+let defaultPrefix = "?" 
+let guildPrefix = ""
 const search = require('youtube-search');
 const opts = {
   maxResults: 10,
-  key: process.env.YT_KEY /* make sure to add a variable in your .env file called "YT_KEY" and assign it like this: 
+  key: process.env.YT_KEY /* make sure to add a variable in your .env 
+  file called "YT_KEY" and assign it like this: 
   YT_KEY=YOUTUBE_API_TOKEN_HERE
   */
 };
@@ -51,8 +52,8 @@ channel.send(welEmbed);
 client.on('ready', () => {
   console.log(`im in\n`)
  setInterval(() => { //${client.guilds.cache.size}
- var statuses=[`?help`,`choosethis.org/choosebot`,`${client.guilds.cache.size} servers`,`r/funny`,'bruh','dis.choosethis.org 😳','vote.choosethis.org','choosethis.org','so many servers (i am watching a lot of them)','you','me','cantchoosethis','yo"ure mom',`reddit tts videos`,`disc.choosethis.org`,'?vote','epic dababy memes 2021 no scam','dbl.choosethis.org','invite.choosethis.org','status.choosethis.org'] 
- var status = statuses[Math.floor(Math.random() * statuses.length)];
+ let statuses=[`?help`,`choosethis.org/choosebot`,`${client.guilds.cache.size} servers`,`r/funny`,'bruh','dis.choosethis.org 😳','vote.choosethis.org','choosethis.org','so many servers (i am watching a lot of them)','you','me','cantchoosethis','yo"ure mom',`reddit tts videos`,`disc.choosethis.org`,'?vote','epic dababy memes 2021 no scam','dbl.choosethis.org','invite.choosethis.org','status.choosethis.org'] 
+ let status = statuses[Math.floor(Math.random() * statuses.length)];
      client.user.setActivity(status,{ type: 'WATCHING' })
  }, 120000);  // if this is under 120,000, you risk getting ratelimiting. 120,000 is 120 seconds (2 minutes). I do not recommend going under this.
 }); 
@@ -117,11 +118,11 @@ function rando(max) {
  return Math.floor(Math.random() * Math.floor(max));
 }
 const users = message.mentions.users.first() || message.author
-var rand1 = rando(255);
-var rand2 = rando(99);
-var rand3 = rando(254);
-var rand4 = rando(256);
-var ip=[rand1+'.'+rand2+'.'+rand3+'.'+rand4]
+let rand1 = rando(255);
+let rand2 = rando(99);
+let rand3 = rando(254);
+let rand4 = rando(256);
+let ip=[rand1+'.'+rand2+'.'+rand3+'.'+rand4]
 const ipEmbed = new Discord.MessageEmbed()
 .setColor('0xffaaaa')
 .setTitle(`omg  i got their ip 😳` )
@@ -184,7 +185,7 @@ if (!message.author.bot) {
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}serverinfo`)) {
  const guild = client.guilds.cache
- var serverIcon = message.guild.iconURL();
+ let serverIcon = message.guild.iconURL();
  const infoEmbed = new Discord.MessageEmbed()
  .setColor(`RANDOM`)
  .setThumbnail(serverIcon)
@@ -219,7 +220,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}serverinfo`)) {
 } //  ❯❯ ❮❮
 if (message.content.toLowerCase().startsWith(`${guildPrefix}channels`)) {
   const guild = client.guilds.cache
-  var serverIcon = message.guild.iconURL();
+  let serverIcon = message.guild.iconURL();
   const infEmbed = new Discord.MessageEmbed()
   .setColor(`RANDOM`)
   .setThumbnail(serverIcon)
@@ -230,7 +231,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}channels`)) {
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}emojis`)) {
   const guild = client.guilds.cache
-  var serverIcon = message.guild.iconURL();
+  let serverIcon = message.guild.iconURL();
   const infEmbed = new Discord.MessageEmbed()
   .setColor(`RANDOM`)
   .setThumbnail(serverIcon)
@@ -240,7 +241,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}emojis`)) {
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}roles`)) {
   const guild = client.guilds.cache
-  var serverIcon = message.guild.iconURL();
+  let serverIcon = message.guild.iconURL();
   const infEmbed = new Discord.MessageEmbed()
   .setColor(`RANDOM`)
   .setThumbnail(serverIcon) 
@@ -290,7 +291,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}roll me`)) {
        }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}dog`)) {
-  var tt = await redditImageFetcher.fetch({
+  let tt = await redditImageFetcher.fetch({
     type: 'custom',
     total: 1,
     subreddit: ['dogs','dog','goldenretrievers','germanshepards','germanshepard','puppy','puppies','puppysmiles','rarepuppers','woof_irl','zoomies']
@@ -312,7 +313,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}dog`)) {
   }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}cat`)) {
-  var tt = await redditImageFetcher.fetch({
+  let tt = await redditImageFetcher.fetch({
     type: 'custom',
     total: 1,
     subreddit: ['cat','cats','kitty','kittens','catsareliquid','meow_irl','sadcats','catsbeingcats','Kitty_Cult']
@@ -334,7 +335,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}cat`)) {
   }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}animal`)) {
-  var tt = await redditImageFetcher.fetch({
+  let tt = await redditImageFetcher.fetch({
     type: 'custom',
     total: 1,
     subreddit: ['animalsbeingbros','animalsbeingconfused','animalsbeingderps','animalsbeingjerks','animalsbeingsleepy','aww','awww','awwww','bigboye','cats','dogs','kitty','kittens','catsareliquid','meow_irl','sadcats','dogs','dog','goldenretrievers','germanshepards','germanshepard','puppy','puppies','puppysmiles','rarepuppers','woof_irl','zoomies','catsbeingcats','cutestofthemall','eyebleach','animals']
@@ -356,8 +357,8 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}animal`)) {
   }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}reddit`)) {
-  var args = message.content.split(' ').slice(1);
-  var tt = await redditImageFetcher.fetch({
+  let args = message.content.split(' ').slice(1);
+  let tt = await redditImageFetcher.fetch({
     type: 'custom',
     total: 1,
     subreddit: [`${args[0]}`]
@@ -379,7 +380,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}reddit`)) {
   }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}meme`)){
-    var tt = await redditImageFetcher.fetch({
+    let tt = await redditImageFetcher.fetch({
     type: 'custom',
     total: 1,
     subreddit:['memes','meme','deepfriedmemes','surrealmemes','nukedmemes','bonehurtingjuice','dankmemes','me_irl','meirl','i_irl','memeeconomy','bikinibottomtwitter','trippinthroughtime','whitepeopletwitter','blackpeopletwitter','boottoobig','historymemes','musicmemes','starterpacks','wholesomememes','onlywholesomememes','funny','comedyheaven','okbuddyretard','dogelore']
@@ -468,8 +469,8 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}vote`)) {
     message.channel.send(voteEmbed)
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}8ball `)) {
-  var responses = [`Yeah`,`Sure`,`Wtf? no`,`nahh`,`yeah for sure`,`definitely yes `,`no?? why??`]
-  var response = responses[Math.floor(Math.random() * responses.length)];
+  let responses = [`Yeah`,`Sure`,`Wtf? no`,`nahh`,`yeah for sure`,`definitely yes `,`no?? why??`]
+  let response = responses[Math.floor(Math.random() * responses.length)];
   const ballEmbed = new Discord.MessageEmbed()
   .setAuthor(`${message.author.tag}\'s question`,"https://cdn.discordapp.com/avatars/"+message.author.id+"/"+message.author.avatar+".gif")
   .setDescription(`${message.author.tag} asks: ${message.content.substring(guildPrefix.length+"8ball".length)}`)
@@ -481,7 +482,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}prefix`)) {
   let perms = message.channel.permissionsFor(message.member);
   let canManageServer = message.channel.permissionsFor(message.member).has("MANAGE_GUILD", false);
   if (canManageServer) {
-    var args = message.content.split(' ').slice(1);
+    let args = message.content.split(' ').slice(1);
     prefix.setPrefix(args[0], message.guild.id)
     message.channel.send(`Okay! I set the prefix to \`${args[0]}\` in ${message.guild.name}. \n(Note: If this command is conflicting with another bot, please use "<@!816457112804261908>prefix" to set it!)`)
     .catch(console.error)
@@ -496,7 +497,7 @@ if (message.content.toLowerCase().startsWith(`<@!816457112804261908>prefix`)) {
   let perms = message.channel.permissionsFor(message.member);
   let canManageServer = message.channel.permissionsFor(message.member).has("MANAGE_GUILD", false);
   if (canManageServer) {
-    var args = message.content.split(' ').slice(1);
+    let args = message.content.split(' ').slice(1);
     prefix.setPrefix(args[0], message.guild.id)
     message.channel.send(`Okay! I set the prefix to \`${args[0]}\` in ${message.guild.name}.`)
     if(message.guild.id === "809668618597826632") {
@@ -507,51 +508,48 @@ if (message.content.toLowerCase().startsWith(`<@!816457112804261908>prefix`)) {
   }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}kick`)) {
-  if (message.guild.me.hasPermission(`KICK_MEMBERS`)) {
-    if (message.member.hasPermission(`KICK_MEMBERS`)) {
-      var member = message.mentions.members.first();
-      var reason = message.content.substring(guildPrefix.length+"kick".length+24)
-      member.kick({reason: `Kick reason not currently supported. Please check with the person who ran the command for the reason!`}).then((member) => {
-        message.channel.send(`${member} has been kicked from ${message.guild.name} for "${reason}".`)
-      });
+    if (message.guild.me.hasPermission(`KICK_MEMBERS`)) {
+      let member = message.mentions.members.first();
+      if (!member) { // if no one is mentioned
+        message.channel.send(`Well I gotta kick someone! Please mention a user to kick!`)
+      } else {
+        if (message.member.hasPermission(`KICK_MEMBERS`)) {
+          let reason = message.content.substring(guildPrefix.length+"kick".length+24)
+          member.kick({reason: `Kick reason not currently supported. Please check with the person who ran the command for the reason!`}).then((member) => {
+            message.channel.send(`${member} has been kicked from ${message.guild.name} for "${reason}".`)
+          });
+        } else {
+          message.channel.send(`${message.author.tag}, you do not have the \`KICK_MEMBERS\` permission and cannot perform this action.`)
+        }
+      }
     } else {
-      message.channel.send(`${message.author.tag}, you do not have the \`KICK_MEMBERS\` permission and cannot perform this action.`)
+      message.channel.send(`oops! Thats an error! I don't have permission to ban them!!! Please get an admin to give me the \`KICK_MEMBERS\` permission and try again!`)
     }
-  } else {
-    message.channel.send(`oops! Thats an error! I don't have permission to ban them!!! Please get an admin to give me the \`KICK_MEMBERS\` permission and try again!`)
-  }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}ban`)) {
-  if (message.guild.me.hasPermission(`BAN_MEMBERS`)) {
-    if (message.member.hasPermission(`BAN_MEMBERS`)) {
-      var member = message.mentions.members.first();
-      var reason = message.content.substring(guildPrefix.length+"ban".length+24)
-      member.ban({reason: `${reason}`}).then((member) => {
-        message.channel.send(`${member} has been banned from ${message.guild.name} for "${reason}".`)
-      });
+    if (message.guild.me.hasPermission(`BAN_MEMBERS`)) {
+      let member = message.mentions.members.first();
+      if (!member) { // if no one is mentioned
+        message.channel.send(`Well I gotta ban someone! Please mention a user to ban!`)
+      } else {
+        if (message.member.hasPermission(`BAN_MEMBERS`)) {
+          let reason = message.content.substring(guildPrefix.length+"kick".length+23)
+          member.ban({reason: `${reason}`}).then((member) => {
+            message.channel.send(`${member} has been banned from ${message.guild.name} for "${reason}".`)
+          });
+        } else {
+          message.channel.send(`${message.author.tag}, you do not have the \`BAN_MEMBERS\` permission and cannot perform this action.`)
+        }
+      }
     } else {
-      message.channel.send(`${message.author.tag}, you do not have the \`BAN_MEMBERS\` permission and cannot perform this action.`)
+      message.channel.send(`oops! Thats an error! I don't have permission to ban them!!! Please get an admin to give me the \`BAN_MEMBERS\` permission and try again!`)
     }
-  } else {
-    message.channel.send(`woops! Thats an error. I don't have permission to ban them! Please tell a server admin to give me the \`BAN_MEMBERS\` permission and try again!`)
-  }
-}
-if (message.content.toLowerCase().startsWith(`${guildPrefix}unban`)) {
-  if (message.member.hasPermission(`BAN_MEMBERS`)) {
-    var member = message.mentions.members.first();
-    var reason = message.content.substring(guildPrefix.length+"unban".length+24)
-    member.unban({reason: `${reason}`}).then((member) => {
-      message.channel.send(`${member} has been unbanned from ${message.guild.name} for "${reason}".`)
-    });
-  } else {
-    message.channel.send(`${message.author.tag}, you do not have the \`BAN_MEMBERS\` permission and cannot perform this action.`)
-  }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}slowmode`)) {
   let canManageChannel = message.channel.permissionsFor(message.member).has("MANAGE_CHANNELS", false)
   if (message.guild.me.hasPermission(`MANAGE_CHANNELS`)) {
     if (canManageChannel) {
-      var args = message.content.split(' ').slice(1); 
+      let args = message.content.split(' ').slice(1); 
       message.channel.setRateLimitPerUser(args[0], `Slowmode set to ${args[0]} by ${message.author.username}` )
       message.channel.send(`Set the slowmode to \`${args[0]}s\` by ${message.author.username}!`)
     } else if (!canManageChannel) {
@@ -576,7 +574,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}ts`)) {// for cadenz
       throw err;
     }
     const _links = data.toString().split("\n");
-    var _link = _links[Math.floor(Math.random() * _links.length)];
+    let _link = _links[Math.floor(Math.random() * _links.length)];
   message.channel.send(`Here is an amazing Taylor Swift song you should listen to! <${_link}>`)
   })
 }
@@ -584,7 +582,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}purge`)) {
   let canManageMessages = message.channel.permissionsFor(message.author).has("MANAGE_MESSAGES", false);
   if (message.guild.me.hasPermission(`MANAGE_MESSAGES`)) {
     if (canManageMessages) {
-      var args = message.content.split(' ').slice(1);
+      let args = message.content.split(' ').slice(1);
       if (parseInt(args[0]) < 100 ) {
         message.channel.bulkDelete(args[0]).then(message.channel.send(`\`${args[0]}\` messages purged by ${message.author.tag}!`))
       } else if (parseInt(args[0]) > 100) {
@@ -604,7 +602,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}rename`)) {
   let canManageChannels = message.channel.permissionsFor(message.member).has("MANAGE_CHANNELS", false);
   if (message.guild.me.hasPermission(`MANAGE_CHANNELS`)) {
     if (canManageChannels) {
-      var args = message.content.split(' ').slice(1);
+      let args = message.content.split(' ').slice(1);
       if (parseInt(args[0]).length > 100) {
         message.channel.send(`oops! I cannot rename this channel. The maximum character limit for channel names is 100 characters!`)
       } else {
@@ -661,10 +659,11 @@ if (message.content.toLowerCase().includes(`(dababy)`)) {
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}name`)) {
   if (message.guild.me.hasPermission(`MANAGE_GUILD`)) {
-    if (message.author.hasPermission(`MANAGE_GUILD`)) {
-      var args = message.content.split('/').slice(1);
-      message.guild.setName(args[0])
-      message.channel.send(`ok idk why you wanna do this but the new server name is \`${args[0]}\``)
+    if (message.member.hasPermission(`MANAGE_GUILD`)) {
+      let args = message.content.split(` `).slice(1);
+      let name = args.join(" ")
+      message.guild.setName(name)
+      message.channel.send(`ok idk why you wanna do this but the new server name is \`${name}\``)
     }
   } else {
     message.channel.send('Well.. thats an error :( I don\'t have the `MANAGE_GUILD` permission and cannot do this. :(')
@@ -688,7 +687,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}servercount`)) {
   })
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}addemoji`)) {
-        var args = message.content.split(' ').slice(1);
+        let args = message.content.split(' ').slice(1);
         if (!message.guild.me.hasPermission(`MANAGE_EMOJIS`)) {
           message.channel.send(`oops! I'm missing the \`MANAGE_EMOJIS\` permission :(`)
         }
@@ -730,7 +729,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}moderation`)) {
   Kick <@User> [Reason] - Kick a user.
   Ban <@User> [Reason] - Ban a user.
   Slowmode <time (in seconds)> - Set a channels slowmode.
-  Name <New Name> - Change the guild name. (Command usage is weird, should look like this: "${guildPrefix}name / A cool Guild Name")
+  Name <New Name> - Change the guild name.
   Rename <New Channel Name> - Rename a channel. Note: spaces cannot be used. use "-" in place of a space.
   Purge <amount> - Purge a specified amount of messages in a channel (up to 100).
   Addemoji <image url> <emoji name> - Add an emoji to your server.
@@ -763,7 +762,7 @@ if (message.guild.id === "809668618597826632") {
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}attach`)) {
   if (message.author.id === "514268920627331082") {
-    var args = message.content.split(' ').slice(1);
+    let args = message.content.split(' ').slice(1);
     let image = args[0]
     let attach = new Discord.MessageAttachment(`${args[0]}`)
     message.channel.send(attach).catch(console.error)
@@ -772,7 +771,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}attach`)) {
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}say`)) {
   const channel = message.mentions.channels.first()
-  var args = message.content.split('||').slice(1);
+  let args = message.content.split('||').slice(1);
   const bruhEmbed = new Discord.MessageEmbed()
   .setColor(`RANDOM`)
   .setTitle(`Message sent from #${message.channel.name}.`)
@@ -787,7 +786,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}misc`)) {
   .setAuthor(`Need help? These are my misc commands.`)
   .setTitle(`\`[] = Optional <> = Required\``)
   .setDescription(`\`\`\`fix
-    Ping - Shows the bot\'s latency.    
+  Ping - Shows the bot\'s latency.    
   Suggest <Suggestion> - Send a suggestion for a command for the bot.
   Report <Report> - Send a report for an issue with the bot.
   Invite - Sends the invite link to invite me to your server.
@@ -806,6 +805,8 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}misc`)) {
   Reddit <subreddit> - Sends a random post from a provided subreddit.
   Emojis - Sends all of the servers emojis
   Channels - Sends all of the servers channels
+  ChannelInfo [#channel] - Sends info about a channel!
+  Uptime - My uptime!
   \`\`\``)
   message.channel.send(miscEmbed)
 }
@@ -838,8 +839,8 @@ if(message.content.toLowerCase().startsWith(`${guildPrefix}tts`)){
         if (msg) { 
           if (message.member.voice.channel) {
             const broadcast = client.voice.createBroadcast();
-            var channelId=message.member.voice.channelID;
-            var channel=client.channels.cache.get(channelId);
+            let channelId=message.member.voice.channelID;
+            let channel=client.channels.cache.get(channelId);
             channel.join().then(connection => {
             broadcast.play(discordTTS.getVoiceStream(`${msg}`));
             const dispatcher=connection.play(broadcast);
@@ -891,6 +892,32 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}eval`)) {
     message.channel.send('oops! Only the bot owner can run this.')
   }
   message.delete();
+}
+if (message.content.toLowerCase().startsWith(`${guildPrefix}channelinfo`)){
+  let channel = message.mentions.channels.first() || message.channel;
+  const infEmbed = new Discord.MessageEmbed()
+  .setColor(`RANDOM`)
+  .setTitle(`Channel Info for #${channel.name}!`)
+  .setDescription(`
+  Name: ${channel.name}
+  ID: ${channel.id}
+  Type: ${channel.type}
+  Creation Date: ${channel.createdAt}
+  Topic: ${channel.topic}
+  Category: ${channel.parent}
+  Name (Mentioned): <#${channel.id}>`)
+  message.channel.send(infEmbed)
+}
+if (message.content.toLowerCase().startsWith(`${guildPrefix}uptime`)){
+  const timeTaken = Date.now() - message.createdTimestamp;
+  const infEmbed = new Discord.MessageEmbed()
+  .setColor(`0xFF3333`)
+  .setTitle(`My uptime!`)
+  .setDescription(`
+  Uptime: ${client.uptime}ms
+  Ping: ${timeTaken}ms
+  `)
+  message.channel.send(infEmbed)
 }
 }}) // complete end of message event
 client.on('messageUpdate', (oldMessage, newMessage) => {
