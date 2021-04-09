@@ -4,6 +4,7 @@ This is my discord bot, ChooseBot. You may use the code in your own projects, th
 If you don't mind, just add a comment to your own code with my github link and my name if you do use it.
 Also, you can vote for my bot [`here`](https://vote.choosethis.org) and invite it [`here`](https://discord.com/oauth2/authorize?client_id=816457112804261908&scope=bot&permissions=1882582134)!
 You will need to install the following packages in your codes terminal to have everything work properly, using "[`npm i PACKAGE-NAME`](https://www.npmjs.com/)"
+Also, the packager files are availible if you need them! You should be able to download everything and then make your own `.env` file and everything should work fine!
 ```
 @top-gg/sdk
 
