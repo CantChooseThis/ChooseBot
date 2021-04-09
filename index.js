@@ -21,7 +21,7 @@ app.get('/', (req, res) => res.send('The man himself is online'));
 app.listen(port, () => console.log(`Logged in at ${Date.now()}. ChooseBot is online at https://localhost:${port}`));
 const redditImageFetcher = require("reddit-image-fetcher")
 const Discord = require('discord.js');
-const client = new Discord.Client({ ws: { properties: { $browser: "Discord iOS" }} });;
+const client = new Discord.Client();; //{ ws: { properties: { $browser: "Discord iOS" }} }
 const figlet = require('util').promisify(require('figlet'));
 const DIG = require("discord-image-generation");
 const prefix = require('discord-prefix');
@@ -748,6 +748,8 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}fun`)) {
   IP [@user] - Sends someones (or the message authors) ｆａｋｅ ip.
   Ascii <Text> - Converts text to an ascii banner and sends it!
   TTS <message> - Joins the user\'s voice channel and says a word / phrase.
+  YTSearch <query> - Search for a youtube video, will give the first result!
+  YTThumb <query> - Search for a video, and it will give you the thumbnail of the first result!
   \`\`\``)
   message.channel.send(funEmbed)
 }
@@ -829,32 +831,33 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}ascii`)){
   })
 }
 if(message.content.toLowerCase().startsWith(`${guildPrefix}tts`)){
-  if (message.guild.me.hasPermission(`CONNECT`) && (message.guild.me.hasPermission(`SPEAK`))) {
-    let args = message.content.split(` `).slice(1);
-    let msg = args.join(" ")
-    if (msg.length < 200) { // if api can load it
-      if (msg) { 
-        if (message.member.voice.channel) {
-          const broadcast = client.voice.createBroadcast();
-          var channelId=message.member.voice.channelID;
-          var channel=client.channels.cache.get(channelId);
-          channel.join().then(connection => {
-          broadcast.play(discordTTS.getVoiceStream(`${msg}`));
-          const dispatcher=connection.play(broadcast);
-          message.channel.send(`I said \`"${msg}"\` in your voice channel!`)
-          });;;
-        } else { // error if not in vc
-          message.channel.send(`Ooops! This command is only availible in Voice Channels! Please connect to one and try using this command again!`)
+    if (message.guild.me.hasPermission(`CONNECT`) && (message.guild.me.hasPermission(`SPEAK`))) { // if it can connect
+      let args = message.content.split(` `).slice(1);
+      let msg = args.join(" ")
+      if (msg.length < 200) { // if api can load it
+        if (msg) { 
+          if (message.member.voice.channel) {
+            const broadcast = client.voice.createBroadcast();
+            var channelId=message.member.voice.channelID;
+            var channel=client.channels.cache.get(channelId);
+            channel.join().then(connection => {
+            broadcast.play(discordTTS.getVoiceStream(`${msg}`));
+            const dispatcher=connection.play(broadcast);
+            message.channel.send(`${message.author.tag} said \`"${msg}"\` in your voice channel!`)
+            })
+          } else { // error if not in vc
+            message.channel.send(`Ooops! This command is only availible in Voice Channels! Please connect to one and try using this command again!`)
+          }
+        } else { // error if no syntax is provided
+            message.channel.send(`well i gotta say SOMETHING.. please tell me what to say and use this command again!`)
         }
-      } else { // error if no syntax is provided
-          message.channel.send(`well i gotta say SOMETHING.. please tell me what to say and use this command again!`)
+      } else {
+        message.channel.send(`Oops! I can\'t say anything greater than 200 characters in length.`)
       }
     } else {
-      message.channel.send(`Oops! I can\'t say anything greater than 200 characters in length.`)
+      message.channel.send(`ooops! I cannot join your voice channel! I do not have permissions to join this channel!`)
     }
-  } else {
-    message.channel.send(`ooops! I cannot join your voice channel! I do not have permissions to join this channel!`)
-  }
+  message.delete();
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}ytsearch`)) {
   let args = message.content.split(` `).slice(1);
