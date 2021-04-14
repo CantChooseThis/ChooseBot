@@ -226,7 +226,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}channels`)) {
   .setThumbnail(serverIcon)
   .setAuthor(`Channels for ${message.guild.name}`,serverIcon)
   .setDescription(message.guild.channels.cache.map(channel => `<#${channel.id}>`))
-  .setFooter(`note: Channels are in no order, and, categories and voice channels do show up.`)
+  .setFooter(`${message.guild.name} has ${message.guild.channels.cache.size} channels.`)
   message.channel.send(infEmbed)
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}emojis`)) {
@@ -237,6 +237,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}emojis`)) {
   .setThumbnail(serverIcon)
   .setAuthor(`Emojis for ${message.guild.name}`,serverIcon)
   .setDescription(message.guild.emojis.cache.map(emoji => `[:${emoji.name}:]`))
+  .setFooter(`${message.guild.name} has ${message.guild.emojis.cache.size} emojis.`)
   message.channel.send(infEmbed)
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}roles`)) {
@@ -247,6 +248,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}roles`)) {
   .setThumbnail(serverIcon) 
   .setAuthor(`Roles for ${message.guild.name}`,serverIcon)
   .setDescription(message.guild.roles.cache.map(role => `<@&${role.id}>`))
+  .setFooter(`${message.guild.name} has ${message.guild.roles.cache.size} roles.`)
   message.channel.send(infEmbed)
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}send`)) {
@@ -462,7 +464,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}vote`)) {
     .setColor('#0x855fb1')
     .setAuthor(`Vote for our server!`)
     .setDescription(`Wanna vote? Below are the links to vote for me on two platforms, and, voting for our discord server!
-    [Top.gg](https://vote.choosethis.org) | [Discord Bot List](https://discordbotlist.com/bots/choosebot) | [Server](https://disc.choosethis.org)   `)
+    [Top.gg](https://vote.choosethis.org) \| [Server](https://disc.choosethis.org)   `)
     .setFooter(`While you have this role, you get access to exclusive giveaways!`,"https://cdn.discordapp.com/avatars/"+message.author.id+"/"+message.author.avatar+".gif")
     .setThumbnail(`https://cdn.discordapp.com/attachments/822930845584064562/823291811212558416/BC_Animated.gif`)
     message.delete();
@@ -546,18 +548,22 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}ban`)) {
     }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}slowmode`)) {
-  let canManageChannel = message.channel.permissionsFor(message.member).has("MANAGE_CHANNELS", false)
-  if (message.guild.me.hasPermission(`MANAGE_CHANNELS`)) {
-    if (canManageChannel) {
-      let args = message.content.split(' ').slice(1); 
-      message.channel.setRateLimitPerUser(args[0], `Slowmode set to ${args[0]} by ${message.author.username}` )
-      message.channel.send(`Set the slowmode to \`${args[0]}s\` by ${message.author.username}!`)
-    } else if (!canManageChannel) {
-      message.channel.send(`oops! <@${message.author.id}> ,you don\'t have the \`MANAGE_CHANNELS\` permission!`)
-    }
-    message.delete();
+  let args = message.content.split(' ').slice(1);
+  if (!args[0]) {
+    message.channel.send(`You need to specify a value for me to set the slowmode to!`)
   } else {
-    message.channel.send('well.. thats an error :( Looks like I don\'t have the `MANAGE_CHANNELS` permission :(. Please get an admin to give me this permission!')
+    let canManageChannel = message.channel.permissionsFor(message.member).has("MANAGE_CHANNELS", false)
+    if (message.guild.me.hasPermission(`MANAGE_CHANNELS`)) {
+      if (canManageChannel) { 
+        message.channel.setRateLimitPerUser(args[0], `Slowmode set to ${args[0]} by ${message.author.username}` )
+        message.channel.send(`Set the slowmode to \`${args[0]}s\`!`)
+      } else if (!canManageChannel) {
+        message.channel.send(`oops! <@${message.author.id}> ,you don\'t have the \`MANAGE_CHANNELS\` permission!`)
+      }
+      message.delete();
+    } else {
+      message.channel.send('well.. thats an error :( Looks like I don\'t have the `MANAGE_CHANNELS` permission :(. Please get an admin to give me this permission!')
+    }
   }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}website`)) {
@@ -619,7 +625,7 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}userinfo`)) {
   const member = message.mentions.members.first() || message.member;
       const uEmbed = new Discord.MessageEmbed()
       .setColor(`RANDOM`)
-      .setAuthor(`Userinfo for ${users.tag}!`)
+      .setAuthor(`Userinfo for ${users.tag}!`,"https://cdn.discordapp.com/avatars/"+message.author.id+"/"+message.author.avatar+".gif")
       .setThumbnail(users.displayAvatarURL())
       .setDescription(`
       Username: ${users.username} Tag: #${users.discriminator}
@@ -679,6 +685,17 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}reply`)) {
     })
       message.react("826742690414198814")
       message.react("826743579984658454") 
+}
+if (message.content.toLowerCase() === "ok") {
+  if (message.guild.id === "809668618597826632") {
+    client.api.channels[message.channel.id].messages.post({
+      data: {
+        message_reference: { message_id: message.id },
+        content: "https://cdn.discordapp.com/attachments/822930774030417961/831939789921845288/ok.gif",
+        allowed_mentions: {replied_user: false}
+      }
+    })
+  }
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}servercount`)) {
   message.channel.send(`I\'m in ${client.guilds.cache.size} servers!`)
@@ -832,32 +849,36 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}ascii`)){
   })
 }
 if(message.content.toLowerCase().startsWith(`${guildPrefix}tts`)){
-    if (message.guild.me.hasPermission(`CONNECT`) && (message.guild.me.hasPermission(`SPEAK`))) { // if it can connect
-      let args = message.content.split(` `).slice(1);
-      let msg = args.join(" ")
-      if (msg.length < 200) { // if api can load it
-        if (msg) { 
-          if (message.member.voice.channel) {
-            const broadcast = client.voice.createBroadcast();
-            let channelId=message.member.voice.channelID;
-            let channel=client.channels.cache.get(channelId);
-            channel.join().then(connection => {
-            broadcast.play(discordTTS.getVoiceStream(`${msg}`));
-            const dispatcher=connection.play(broadcast);
-            message.channel.send(`${message.author.tag} said \`"${msg}"\` in your voice channel!`)
-            })
-          } else { // error if not in vc
-            message.channel.send(`Ooops! This command is only availible in Voice Channels! Please connect to one and try using this command again!`)
+  if (message.author.id === "376137606662193162") {
+    message.channel.send(`shut the fuck up dumbass||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||${message.author}`)
+  } else {
+      if (message.guild.me.hasPermission(`CONNECT`) && (message.guild.me.hasPermission(`SPEAK`))) { // if it can connect
+        let args = message.content.split(` `).slice(1);
+        let msg = args.join(" ")
+        if (msg.length < 200) { // if api can load it
+          if (msg) { 
+            if (message.member.voice.channel) {
+              const broadcast = client.voice.createBroadcast();
+              let channelId=message.member.voice.channelID;
+              let channel=client.channels.cache.get(channelId);
+              channel.join().then(connection => {
+              broadcast.play(discordTTS.getVoiceStream(`${msg}`));
+              const dispatcher=connection.play(broadcast);
+              message.channel.send(`${message.author.tag} said \`"${msg}"\` in your voice channel!`)
+              })
+            } else { // error if not in vc
+              message.channel.send(`Ooops! This command is only availible in Voice Channels! Please connect to one and try using this command again!`)
+            }
+          } else { // error if no syntax is provided
+              message.channel.send(`well i gotta say SOMETHING.. please tell me what to say and use this command again!`)
           }
-        } else { // error if no syntax is provided
-            message.channel.send(`well i gotta say SOMETHING.. please tell me what to say and use this command again!`)
+        } else {
+          message.channel.send(`Oops! I can\'t say anything greater than 200 characters in length.`)
         }
       } else {
-        message.channel.send(`Oops! I can\'t say anything greater than 200 characters in length.`)
+        message.channel.send(`ooops! I cannot join your voice channel! I do not have permissions to join this channel!`)
       }
-    } else {
-      message.channel.send(`ooops! I cannot join your voice channel! I do not have permissions to join this channel!`)
-    }
+  }
   message.delete();
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}ytsearch`)) {
@@ -882,14 +903,48 @@ if (message.content.toLowerCase().startsWith(`${guildPrefix}ytthumb`)) {
   })
 }
 if (message.content.toLowerCase().startsWith(`${guildPrefix}eval`)) {
-  if (message.author.id === "514268920627331082") {
+  if (!message.author.id === "514268920627331082") {
+    message.channel.send('oops! Only the bot owner can eval code!')
+  } else if (message.author.id === "514268920627331082") {
     let args = message.content.split(` `).slice(1);
-    let msg = args.join(" ")
-    let code = eval(msg)
-    console.log(`${msg} evaluated is: ${code}`)
-  } else {
-    console.log(`${message.author.tag} tried to eval ${message.content}`)
-    message.channel.send('oops! Only the bot owner can run this.')
+    let msg = args.join(" ") // code that should be evalled
+    if (!msg) {
+      message.channel.send(`What do you want me to eval, Nothing?? Next time give me something to eval <:hesrightyouknow:830598298116030505>`)
+    } else {
+        let code = eval(msg) // evalled code
+        const timeTaken = Date.now() - message.createdTimestamp;
+        if (typeof(code) === undefined && code !== undefined) {
+          message.channel.send("I wasn\'t able to find the type of the code, but here is your output.") 
+          const evalEmbed = new Discord.MessageEmbed()
+          .setColor(`0xFFAAAA`)
+          .setAuthor(`Evaluation`)
+          .setTitle(`Evaluated in \*${timeTaken}ms\*`)
+          .setDescription(`
+          Input:\`\`\`${msg}\`\`\`
+          Output:\`\`\`${code}\`\`\``)
+          message.channel.send(evalEmbed)
+        } else if (code === undefined && (typeof(code) !== undefined)) {
+            message.channel.send("Well I\'m not sure how, but, I couldn't find your output! Here is the type of it, though.")
+            const evalEmbed = new Discord.MessageEmbed()
+            .setColor(`0xFFAAAA`)
+            .setAuthor(`Evaluation`)
+            .setTitle(`Evaluated in \*${timeTaken}ms\*`)
+            .setDescription(`
+            Input:\`\`\`${msg}\`\`\`
+            Type:\`\`\`${typeof(code)}\`\`\``)
+            message.channel.send(evalEmbed)
+        } else if (code !== undefined && typeof(code) !== undefined) {
+          const evalEmbed = new Discord.MessageEmbed()
+          .setColor(`0xFFAAAA`)
+          .setAuthor(`Evaluation`)
+          .setTitle(`Evaluated in \*${timeTaken}ms\*`)
+          .setDescription(`
+          Input:\`\`\`${msg}\`\`\`
+          Output:\`\`\`${code}\`\`\`
+          Type:\`\`\`${typeof(code)}\`\`\``)
+          message.channel.send(evalEmbed)
+        }
+    }
   }
   message.delete();
 }
